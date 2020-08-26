@@ -1,3 +1,4 @@
+
 const mineflayer = require('mineflayer')
 
 if (process.argv.length < 4 || process.argv.length > 6) {
@@ -12,24 +13,18 @@ const bot = mineflayer.createBot({
     password: process.argv[5]
 })
 
-
 bot.once('spawn', function () {
     setInterval(() => {
+        const entity = bot.nearestEntity(match = (entity) => { return entity.type === 'mob' })
+
         if (entity !== null) {
-            if (entity.type === 'mob') {
-                bot.attack(entity)
-                //
-                // if (bot.food < 15) {
-                //     console.log('\u0007');
-                //     bot.activateItem(true)
-                // }
-            }
+            bot.attack(entity);
+            // @todo handle hunger
         }
         console.clear();
         console.log(new Date().toLocaleString() + " Level:" + bot.experience.level + " Food:" + bot.food + " Health: " + bot.health);
         let multiply = 40;
         let progress = bot.experience.progress * multiply;
         console.log("[" + "*".repeat(progress) + " ".repeat((multiply - progress + 1)) + "]");
-        const entity = bot.nearestEntity()
     }, 1000)
 })
